@@ -45,7 +45,6 @@ configuration."""
 
         # Send tweet to user with generation attached
         tweet_data = generation_params["original_tweet_data"]
-        twitter_username = tweet_data["username"]
         tweet_to_reply_to_id = tweet_data["tweet_id"]
         sent_tweet_data = self.twitter_client.send_reply(
             in_reply_to_tweet_id=tweet_to_reply_to_id,

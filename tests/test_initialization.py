@@ -86,7 +86,6 @@ def test_bot_sends_a_new_generation():
     generation_notification_msg = {
         "generation_id": "GENERATION_ID",
         "original_tweet_data": {
-            "username": "@iamdiegovincent",
             "tweet_id": 123456,
             "tweet": "a beautiful corgi in pixel art style",
         },
