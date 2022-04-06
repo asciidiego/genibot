@@ -15,7 +15,7 @@
 
 ** Testing
 
-   To run tests on file changes, we use [[https://eradman.com/entrproject/][=entr=]]:
+   To run tests on file changes, we use =[[https://eradman.com/entrproject/][entr]]=
 
    #+BEGIN_SRC sh
    
