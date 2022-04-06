@@ -15,5 +15,10 @@
 
 ** Testing
 
-   To run tests on file changes, we use [[https://eradman.com/entrproject/][=entr=]].
+   To run tests on file changes, we use [[https://eradman.com/entrproject/][=entr=]]:
 
+   #+BEGIN_SRC sh
+   
+   find tests -name "*.py" | entr poetry run pytest
+   
+   #+END_SRC
