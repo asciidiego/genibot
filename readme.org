@@ -6,3 +6,14 @@
   interfaces with a job queue, a message queue, and a storage service
   to send jobs, get notified when the jobs are processed, and download
   the final results--in that order.
+
+* Development
+
+** Setup
+
+   We use [[https://python-poetry.org/][Poetry]] for Python dependency management.
+
+** Testing
+
+   To run tests on file changes, we use [[https://eradman.com/entrproject/][=entr=]].
+
