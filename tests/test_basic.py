@@ -37,10 +37,6 @@ class MockGenerationRepository:
         return generation
 
 
-def test_genibot_module_is_imported_correctly():
-    assert genibot is not None
-
-
 def test_genibot_initialization():
     empty_twitter_client = MockTwitterClient()
     empty_generation_repository = MockGenerationRepository()
