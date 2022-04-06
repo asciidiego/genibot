@@ -1,0 +1,8 @@
+#+title: Genibot
+#+subtitle: Create amazing art as you wish
+* Introduction
+
+  Genibot is a Twitter bot that allows anyone create amazing art.  It
+  interfaces with a job queue, a message queue, and a storage service
+  to send jobs, get notified when the jobs are processed, and download
+  the final results--in that order.
