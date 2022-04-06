@@ -1,6 +1,7 @@
-from genibot.client import Client
+from genibot.client import Bot
 
 
-def init(twitter_client):
-    """Return an instance of a Genibot client."""
-    return Client(twitter_client)
+def init(bot_config={}):
+    """Return an instance of the Genibot bot."""
+
+    return Bot(bot_config)
