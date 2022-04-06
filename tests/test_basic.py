@@ -1,6 +1,7 @@
 import genibot
 from genibot.client import TwitterClient, GenerationRepository
 
+
 @TwitterClient.register
 class MockTwitterClient:
     def __init__(self, latest_mentions=[]):
