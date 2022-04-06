@@ -17,6 +17,12 @@ class GenerationRepository(metaclass=abc.ABCMeta):
         """Returns an image generation based on the ID of the generation."""
 
 
+class GenerationScheduler(metaclass=abc.ABCMeta):
+    @abc.abstractmethod
+    def schedule_generation_job(job_data):
+        """Sends a generation job to the job queue"""
+
+
 class Bot:
     def __init__(self, config):
         """Initializes a Genibot Twitter Bot client.  Requires a configuration
@@ -27,15 +33,34 @@ dictionary containing the following:
         """
         self.twitter_client = config["twitter_client"]
         self.generation_repository = config["storage_client"]
+        self.generation_scheduler = config["generation_scheduler"]
 
     def check_for_new_tweets(self):
         latest_mentions = self.twitter_client.get_latest_mentions()
 
         return latest_mentions
 
+    def schedule_generation(self, job_data):
+        """Schedules a generation job. The generation job configuration is
+mostly Twitter data. In particular, data about the tweet to be used to
+generate the image.
+
+        """
+
+        tweet_data = job_data["tweet_data"]
+        prompt = tweet_data["tweet"]
+
+        job_data = { "prompt": prompt }
+        scheduler = self.generation_scheduler
+        scheduling_result = scheduler.schedule_generation_job(job_data)
+
+        return scheduling_result
+
     def send_generation(self, generation_params):
         """Send a new generation to a user based on the generation
-configuration."""
+configuration of a finished generation job.
+
+        """
 
         # Download generation from storage (e.g. S3)
         generation_id = generation_params["generation_id"]

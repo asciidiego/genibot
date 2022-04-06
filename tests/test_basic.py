@@ -1,5 +1,6 @@
+import pytest
 import genibot
-from genibot.client import TwitterClient, GenerationRepository
+from genibot.client import TwitterClient, GenerationRepository, GenerationScheduler
 
 
 @TwitterClient.register
@@ -37,12 +38,22 @@ class MockGenerationRepository:
         return generation
 
 
+@GenerationScheduler.register
+class MockGenerationScheduler:
+    def __init__(self, should_fail=False):
+        self.should_fail = should_fail
+
+    def schedule_generation_job(self, job_data):
+        return 0 if self.should_fail else 1
+
+
 def test_genibot_initialization():
     empty_twitter_client = MockTwitterClient()
     empty_generation_repository = MockGenerationRepository()
     config = {
         "twitter_client": empty_twitter_client,
         "storage_client": empty_generation_repository,
+        "generation_scheduler": MockGenerationScheduler(should_fail=False),
     }
 
     bot = genibot.init(config)
@@ -58,6 +69,7 @@ def test_bot_checks_if_there_is_a_new_tweet():
     config = {
         "twitter_client": twitter_client,
         "storage_client": generation_repository,
+        "generation_scheduler": MockGenerationScheduler(should_fail=False),
     }
 
     bot = genibot.init(config)
@@ -69,6 +81,27 @@ def test_bot_checks_if_there_is_a_new_tweet():
     assert len(new_tweets) > 0
 
 
+def test_bot_schedules_generation_job_from_tweet():
+    config = {
+        "twitter_client": {},
+        "storage_client": {},
+        "generation_scheduler": MockGenerationScheduler(should_fail=False),
+    }
+    bot = genibot.init(config)
+    tweet_data = {
+        "tweet_id": 0,
+        "tweet": "beautiful corgi in pixel art",
+    }
+    job_data = {
+        "tweet_data": tweet_data,
+    }
+
+    result = bot.schedule_generation(job_data)
+
+    assert result is not None and result != 0
+
+
+
 def test_bot_sends_a_new_generation():
     stored_generations = {
         "GENERATION_ID": b'generation_bytes',
@@ -77,6 +110,7 @@ def test_bot_sends_a_new_generation():
     config = {
         "twitter_client": MockTwitterClient(),
         "storage_client": MockGenerationRepository(stored_generations),
+        "generation_scheduler": MockGenerationScheduler(should_fail=False),
     }
     bot = genibot.init(config)
 
