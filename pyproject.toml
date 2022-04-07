@@ -6,6 +6,10 @@ authors = ["Diego Rodriguez <diego.vincent.rodriguez@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
+redis = "^4.2.2"
+tweepy = {extras = ["async"], version = "^4.8.0"}
+boto3 = "^1.21.34"
+Pillow = "^9.1.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.1.1"
