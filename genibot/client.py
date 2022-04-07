@@ -50,7 +50,6 @@ generate the image.
         tweet_data = job_data["tweet_data"]
         prompt = tweet_data["tweet"]
 
-        job_data = { "prompt": prompt }
         scheduler = self.generation_scheduler
         scheduling_result = scheduler.schedule_generation_job(job_data)
 
@@ -80,7 +79,7 @@ configuration of a finished generation job.
         # tweet.
         return {
             "generation_id": generation_id,
-            "sent_tweet_id": sent_tweet_data["tweet_id"]
+            "sent_tweet_id": tweet_data["tweet_id"]
         }
             
 
